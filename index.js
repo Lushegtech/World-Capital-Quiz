@@ -1,8 +1,19 @@
 import express from "express";
 import bodyParser from "body-parser";
+import pg from "pg";
 
 const app = express();
 const port = 3000;
+
+// define a new client and configure it
+
+const pg = new pg.Client({
+  user: "postgres",
+  password: "@Caro07033",
+  database: "globe",
+  host: "localhost",
+  port: 5432,
+});
 
 let quiz = [
   { country: "France", capital: "Paris" },
