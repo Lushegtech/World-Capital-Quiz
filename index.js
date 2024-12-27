@@ -1,13 +1,15 @@
 import express from "express";
-import bodyParser from "body-parser";
-import pg from "pg";
+import bodyParser from "body-parser"; //get hold of the body-parser module
+import pg from "pg"; 
 
 const app = express();
 const port = 3000;
 
 // define a new client and configure it
 
-const pg = new pg.Client({
+// classes are templates for creating objects ... example, Client below is a class and it contains all the required properties
+
+const db = new pg.Client({
   user: "postgres",
   password: "@Caro07033",
   database: "globe",
@@ -15,11 +17,22 @@ const pg = new pg.Client({
   port: 5432,
 });
 
+db.connect(); // connect to the database
+
 let quiz = [
   { country: "France", capital: "Paris" },
   { country: "United Kingdom", capital: "London" },
   { country: "United States of America", capital: "New York" },
 ];
+
+db.query("SELECT * FROM capitals", (err, res) => {
+
+  if (err) {
+    console.error("Error executing query ", err.stack);
+  } else {
+    quiz = res.rows;
+  }
+});
 
 let totalCorrect = 0;
 
